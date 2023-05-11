@@ -4,7 +4,7 @@ import { FiZap } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 
-function Header() {
+function Header(props) {
 
     const navItems = [
         { name: 'Home', link: '/' },
@@ -14,6 +14,7 @@ function Header() {
     ];
     // You can set up the login/logout button to appear conditionally depending on user authentication
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+
     const authenticate = () => {
         setIsLoggedIn(!isLoggedIn);
     };
