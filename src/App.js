@@ -12,6 +12,7 @@ import Root from './Components/pages/Root';
 import Logout from './Components/pages/Logout';
 import Login from './Components/pages/Login';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,8 +22,8 @@ const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/resources", element: <Resources /> },
-      { path: "/logout", element: <Logout /> },
-      { path: "/login", element: <Login /> },
+      { path: "/logout", element: <Login /> },
+      { path: "/login", element: <Logout /> },
     ]
   },
 
