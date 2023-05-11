@@ -22,30 +22,30 @@ function Header() {
 
         <header>
             <div className="header-content">
-                <div className="logo"></div>
-                <Link to="/" style={{
-                    color: 'inherit',
-                    "text-decoration": "none",
-                    padding: "0.5rem",
-                    "border-radius": "5px"
-                }}>
-                    <FiZap /> Elite Edits
-                </Link>
-            </div>
-            <nav>
-                <ul>
-                    {isLoggedIn && navItems.map((item) => (
-                        <li key={item.name}>
-                            <Link to={item.link}>{item.name}</Link>
+                <div className="logo">
+                    <Link to="/" style={{
+                        color: 'inherit',
+                        "text-decoration": "none",
+                        padding: "0.5rem",
+                        "border-radius": "5px"
+                    }}>
+                        <FiZap /> Elite Edits
+                    </Link>
+                </div>
+                <nav>
+                    <ul>
+                        {isLoggedIn && navItems.map((item) => (
+                            <li key={item.name}>
+                                <Link to={item.link}>{item.name}</Link>
+                            </li>
+                        ))}
+                        <li>
+                            <Link to={isLoggedIn ? '/logout' : '/login'} onClick={authenticate}>{isLoggedIn ? 'Logout' : 'Login'}</Link>
                         </li>
-                    ))}
-                    <li>
-                        <Link to={isLoggedIn ? '/logout' : '/login'} onClick={authenticate}>{isLoggedIn ? 'Logout' : 'Login'}</Link>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        </header >
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
     );
 }
