@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { login } from '../../Slice/AuthorizationSlice';
 
 function Login(props) {
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,7 +27,7 @@ function Login(props) {
         textAlign: 'right',
         fontSize: '0.9rem',
         color: '#666',
-        textDecoration: 'underline',
+        'text-decoration': 'underline',
         cursor: 'pointer',
     };
 
@@ -60,17 +65,27 @@ function Login(props) {
         cursor: 'pointer',
     };
 
-    const authenticate = () => {
-        // if (username && password) {
-        // TODO2: set global isLoggedIn to true here...
-        // TODO1: check in parent itself.
-        // props.authenticate(username, password);
-        // }
-        console.log("working fine");
-    }
+    const dispatch = useDispatch();
+    // toast.success("Logged in successfully");
 
+    let toast_id;
+    const authenticate = () => {
+        if (username && password) {
+            toast("Logged in successfully!!");
+            console.log("logged in successfully!!");
+            dispatch(login());
+            sessionStorage.setItem("freshLogin", "true");
+        } else {
+            console.log("incorrect username or password");
+            if (!toast.isActive(toast_id))
+                toast_id = toast.error("Incorrect username or password !!");
+
+        }
+
+    }
     return (
         <div>
+            <ToastContainer />
             <h1 style={{ textAlign: 'center' }}>Login Page</h1>
             <form onSubmit={handleSubmit} style={formStyle}>
                 <label style={labelStyle}>

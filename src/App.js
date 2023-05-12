@@ -15,7 +15,6 @@ import { Provider, useSelector } from 'react-redux';
 import store from './Store';
 
 
-// 
 
 // const routeDefinitions = createRoutesFromElements(
 //     <Route>
@@ -25,6 +24,7 @@ import store from './Store';
 // )
 // const router = createBrowserRouter(routeDefinitions);
 
+// TODO: on first render / -> login, after login / -> home  ISSUE: cant user store isLoggedIn in App.js 
 function App() {
   const router = createBrowserRouter([
     {
@@ -36,7 +36,7 @@ function App() {
         { path: "/contact", element: <Contact /> },
         { path: "/resources", element: <Resources /> },
         { path: "/logout", element: <Login /> },
-        { path: "/login", element: <Logout /> },
+        { path: "/login", element: <Home /> },
       ]
     },
 

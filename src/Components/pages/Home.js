@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Login from './Login';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Home() {
     const pageTitleStyle = {
@@ -41,9 +42,16 @@ function Home() {
     };
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     if (!isLoggedIn) return <Login />;
+    console.log(sessionStorage.getItem("freshItem"))
+    if (sessionStorage.getItem("freshLogin") === "true") {
+        toast("Logged in successfully");
+        sessionStorage.clear();
+    }
+
 
     return (
         <div>
+            <ToastContainer />
             <h1 style={pageTitleStyle}>Welcome to this awesome land of reels</h1>
             <section style={sectionStyle}>
                 <img src={"https://as1.ftcdn.net/v2/jpg/03/78/85/18/1000_F_378851810_GwZY8KGQaw1ikbz3rqnjbs2DMNvfjUHp.jpg"} alt="Placeholder" style={imageStyle} />

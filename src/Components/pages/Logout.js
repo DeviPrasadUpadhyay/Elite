@@ -1,9 +1,13 @@
-import React from 'react'
+// import React from 'react'
+// import { toast } from 'react-toastify'
+// import Login from './Login';
 
-const Logout = () => {
-    return (
-        <div>Logout</div>
-    )
-}
+// const Logout = () => {
+//     toast("logged in successfully");
+//     // <div>Logout</div>
+//     return (
+//         // <Login />
+//     )
+// }
 
-export default Logout
+// export default Logout

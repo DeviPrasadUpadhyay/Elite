@@ -13,20 +13,13 @@ function Header(props) {
         { name: 'Contact', link: '/contact' },
         { name: 'Resources', link: '/resources' },
     ];
-    // You can set up the login/logout button to appear conditionally depending on user authentication
-    // const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const dispatch = useDispatch();
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const authenticate = () => {
         if (isLoggedIn) dispatch(logout());
-        else dispatch(login());
-        console.log("clicked")
+        // console.log("clicked")
     };
-    // const dispatch = useDispatch();
-    // dispatch(login());
-    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-
-    // console.log("login : ", isLoggedIn);
 
     return (
 
