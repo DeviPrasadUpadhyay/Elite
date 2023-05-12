@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import Login from './Login';
 
 function Home() {
     const pageTitleStyle = {
@@ -37,6 +39,8 @@ function Home() {
         fontSize: '1.2rem',
         lineHeight: '1.5',
     };
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    if (!isLoggedIn) return <Login />;
 
     return (
         <div>

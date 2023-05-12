@@ -11,23 +11,12 @@ import Resources from '../src/Components/pages/Resources';
 import Root from './Components/pages/Root';
 import Logout from './Components/pages/Logout';
 import Login from './Components/pages/Login';
+import { Provider, useSelector } from 'react-redux';
+import store from './Store';
 
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    children: [
-      { path: "/", element: <Home /> },
-      { path: "/about", element: <About /> },
-      { path: "/contact", element: <Contact /> },
-      { path: "/resources", element: <Resources /> },
-      { path: "/logout", element: <Login /> },
-      { path: "/login", element: <Logout /> },
-    ]
-  },
+// 
 
-]);
 // const routeDefinitions = createRoutesFromElements(
 //     <Route>
 //         <Route path="/" element={<Home />} />
@@ -36,13 +25,26 @@ const router = createBrowserRouter([
 // )
 // const router = createBrowserRouter(routeDefinitions);
 
-
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      children: [
+        { path: "/", element: <Home /> },
+        { path: "/about", element: <About /> },
+        { path: "/contact", element: <Contact /> },
+        { path: "/resources", element: <Resources /> },
+        { path: "/logout", element: <Login /> },
+        { path: "/login", element: <Logout /> },
+      ]
+    },
+
+  ]);
   return (
-
-    <RouterProvider router={router} />
-
-
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 }
 

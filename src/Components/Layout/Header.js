@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Header.css';
 import { FiZap } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../../Slice/AuthorizationSlice';
 
 function Header(props) {
 
@@ -13,11 +14,19 @@ function Header(props) {
         { name: 'Resources', link: '/resources' },
     ];
     // You can set up the login/logout button to appear conditionally depending on user authentication
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    // const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+    const dispatch = useDispatch();
     const authenticate = () => {
-        setIsLoggedIn(!isLoggedIn);
+        if (isLoggedIn) dispatch(logout());
+        else dispatch(login());
+        console.log("clicked")
     };
+    // const dispatch = useDispatch();
+    // dispatch(login());
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+    // console.log("login : ", isLoggedIn);
 
     return (
 
