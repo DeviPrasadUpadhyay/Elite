@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Signup.css';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword, validateText } from './utilities/validator';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { addUser, getUsers, writeUserData } from '../../firebase/Firebase';
 
 
 const Signup = () => {
@@ -15,6 +16,7 @@ const Signup = () => {
     const [lastNameLog, setLastNameLog] = useState("");
     const [emailLog, setEmailLog] = useState('');
     const [passwordLog, setPasswordLog] = useState('');
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("=>", firstName, lastName, email, password);
@@ -23,6 +25,45 @@ const Signup = () => {
         setEmailLog(validateEmail(email));
         setPasswordLog(validatePassword(password));
         console.log("=>", firstNameLog, lastNameLog, emailLog, passwordLog)
+
+        if (!(validateText(firstNameLog) && validateText(lastNameLog) && validateEmail(emailLog) && validatePassword(passwordLog))) {
+            return;
+        }
+        const user = {
+            firstName,
+            lastName,
+            email,
+            password
+        };
+
+
+        let existingUsers = [];
+        getUsers().then(data => {
+            console.log("data : ", data);
+            existingUsers = [...data];
+            console.log("existingUsers : ", existingUsers);
+            const idx = existingUsers.find(e =>
+                e.firstName == user.firstName &&
+                e.lastName == user.lastName &&
+                e.password == user.password &&
+                e.email == user.email
+            );
+            if (idx && idx !== -1 && existingUsers.length > 0) {
+                console.log("user already present");
+                toast("You are already an user.")
+            } else {
+                console.log("NOT present")
+                addUser(user);
+                toast("You have successfully registered, we sent you an verification email, the last step to get started !!")
+            }
+        })
+        // console.log("=> get ", getUsers())
+        // TODO: make firebase app work 
+        // writeUserData("aadisupersonic", "aadi", "aadisupersonic@gmail.com", "imageOfAadi.com").then(() => {
+        //     console.log("written successfully");
+        // }).catch(() => {
+        //     console.log("failed writing");
+        // });
     };
     const navigate = useNavigate();
 
@@ -39,6 +80,7 @@ const Signup = () => {
 
     return (
         <form onSubmit={handleSubmit} className="signup-form">
+            <ToastContainer />
             <label htmlFor="first-name">First Name</label>
             <input
                 type="text"
