@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Login from './Login';
 import { ToastContainer, toast } from 'react-toastify';
 import Signup from './Signup';
+import FileUpload from '../../Utility/FileUpload';
 
 let toast_id;
 function Home() {
@@ -19,6 +20,7 @@ function Home() {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '5rem',
+        marginBottom: '4rem'
     };
 
     const imageStyle = {
@@ -55,7 +57,7 @@ function Home() {
 
     return (
         <div>
-            <Signup />
+            {/* <Signup /> */}
             <ToastContainer />
             <h1 style={pageTitleStyle}>Welcome to this awesome land of reels</h1>
             <section style={sectionStyle}>
@@ -65,6 +67,10 @@ function Home() {
                     <p style={descriptionStyle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id elit id orci tincidunt mollis. Aliquam sed ante ligula. Curabitur id nibh vitae odio euismod euismod vitae eget lectus. Duis bibendum massa eget sapien pharetra, id sollicitudin lorem auctor. Nam faucibus, dolor ut aliquet feugiat, purus elit elementum quam, sit amet congue urna eros non lorem.</p>
                 </div>
             </section>
+            <div style={{ marginLeft: '23rem', marginTop: "10rem" }}>
+
+                <FileUpload />
+            </div>
         </div>
     );
 }

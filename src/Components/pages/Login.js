@@ -88,6 +88,35 @@ function Login(props) {
         navigate('/signup');
         console.log("navigating")
     }
+    const sendEmailForPasswordReset = () => {
+        //         fetch('http://localhost:3001/send', {
+        //   method: 'POST',
+        //   body: JSON.stringify({}),
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   }
+        // })
+        //   .then(response => {
+        //     if (!response.ok) {
+        //       throw new Error('Network response was not ok');
+        //     }
+        //     return response.json();
+        //   })
+        //   .then(data => {
+        //     console.log(data);
+        //   })
+        //   .catch(error => {
+        //     console.error('There was a problem with the fetch operation:', error);
+        //   });
+        fetch('http://localhost:3001/send', {
+            method: 'POST',
+            body: JSON.stringify({}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+    }
 
     return (
         <div>
@@ -105,7 +134,7 @@ function Login(props) {
                 {/* <div style={forgotPasswordStyle}>Forgot your password?</div> */}
                 <button type="submit" style={buttonStyle} onClick={authenticate}>Log in</button>
                 <CreateAccountButton label="Create new account" onClick={signup} />
-                <CreateAccountButton label="Forgot password" />
+                <CreateAccountButton label="Forgot password" onClick={sendEmailForPasswordReset} />
 
             </form>
         </div>

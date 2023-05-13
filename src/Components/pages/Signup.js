@@ -3,7 +3,7 @@ import './Signup.css';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword, validateText } from './utilities/validator';
 import { ToastContainer, toast } from 'react-toastify';
-import { addUser, getUsers, writeUserData } from '../../firebase/Firebase';
+import { addUser, getUsers } from '../../firebase/Firebase';
 
 
 const Signup = () => {
@@ -55,6 +55,26 @@ const Signup = () => {
                 console.log("NOT present")
                 addUser(user);
                 toast("You have successfully registered, we sent you an verification email, the last step to get started !!")
+                fetch('http://localhost:3001/send', {
+                    method: 'POST',
+                    body: JSON.stringify({ a: 2 }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    // .then(data => {
+                    //     console.log(data);
+                    // })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+
             }
         })
         // console.log("=> get ", getUsers())
