@@ -13,6 +13,7 @@ import Logout from './Components/pages/Logout';
 import Login from './Components/pages/Login';
 import { Provider, useSelector } from 'react-redux';
 import store from './Store';
+import Signup from './Components/pages/Signup';
 
 
 
@@ -36,6 +37,7 @@ function App() {
         { path: "/resources", element: <Resources /> },
         { path: "/logout", element: <Login /> },
         { path: "/login", element: <Home /> },
+        { path: "/signup", element: <Signup /> },
       ]
     },
 

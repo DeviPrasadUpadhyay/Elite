@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Login from './Login';
 import { ToastContainer, toast } from 'react-toastify';
+import Signup from './Signup';
 
 let toast_id;
 function Home() {
@@ -54,6 +55,7 @@ function Home() {
 
     return (
         <div>
+            <Signup />
             <ToastContainer />
             <h1 style={pageTitleStyle}>Welcome to this awesome land of reels</h1>
             <section style={sectionStyle}>

@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { login } from '../../Slice/AuthorizationSlice';
 import { unstable_HistoryRouter, useNavigate } from 'react-router-dom';
+import CreateAccountButton from './utilities/CreateAccount';
 
 function Login(props) {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -57,10 +58,11 @@ function Login(props) {
 
     const buttonStyle = {
         marginTop: '1rem',
-        padding: '0.5rem 1rem',
+        marginBottom: '3rem',
+        padding: '0.5rem 2rem',
         borderRadius: '0.25rem',
         border: 'none',
-        background: 'linear-gradient(to right, #0099ff, #0f9900)',
+        background: 'linear-gradient(to bottom right, #0077ff, #00bfff)',
         color: 'white',
         fontSize: '1rem',
         cursor: 'pointer',
@@ -81,6 +83,12 @@ function Login(props) {
                 toast_id = toast.error("Incorrect credentials!");
         }
     }
+
+    const signup = () => {
+        navigate('/signup');
+        console.log("navigating")
+    }
+
     return (
         <div>
             <ToastContainer />
@@ -94,8 +102,11 @@ function Login(props) {
                     Password:
                     <input type="password" value={password} onChange={handlePasswordChange} style={inputStyle} />
                 </label>
-                <div style={forgotPasswordStyle}>Forgot your password?</div>
+                {/* <div style={forgotPasswordStyle}>Forgot your password?</div> */}
                 <button type="submit" style={buttonStyle} onClick={authenticate}>Log in</button>
+                <CreateAccountButton label="Create new account" onClick={signup} />
+                <CreateAccountButton label="Forgot password" />
+
             </form>
         </div>
     );
