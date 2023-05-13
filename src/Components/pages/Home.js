@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Login from './Login';
 import { ToastContainer, toast } from 'react-toastify';
 
+let toast_id;
 function Home() {
     const pageTitleStyle = {
         fontSize: '3rem',
@@ -40,14 +41,16 @@ function Home() {
         fontSize: '1.2rem',
         lineHeight: '1.5',
     };
+
+    useEffect(() => {
+        if (sessionStorage.getItem("freshLogin") === "true") {
+            if (!toast.isActive(toast_id))
+                toast_id = toast("Logged in successfully");
+            sessionStorage.clear();
+        }
+    }, [sessionStorage.getItem("freshLogin")]);
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     if (!isLoggedIn) return <Login />;
-    console.log(sessionStorage.getItem("freshItem"))
-    if (sessionStorage.getItem("freshLogin") === "true") {
-        toast("Logged in successfully");
-        sessionStorage.clear();
-    }
-
 
     return (
         <div>

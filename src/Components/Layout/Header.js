@@ -18,7 +18,6 @@ function Header(props) {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const authenticate = () => {
         if (isLoggedIn) dispatch(logout());
-        // console.log("clicked")
     };
 
     return (
@@ -28,9 +27,9 @@ function Header(props) {
                 <div className="logo">
                     <Link to="/" style={{
                         color: 'inherit',
-                        "text-decoration": "none",
+                        textDecoration: "none",
                         padding: "0.5rem",
-                        "border-radius": "5px"
+                        borderRadius: "5px"
                     }}>
                         <FiZap /> Elite Edits
                     </Link>

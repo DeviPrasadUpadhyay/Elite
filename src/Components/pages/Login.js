@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { login } from '../../Slice/AuthorizationSlice';
+import { unstable_HistoryRouter, useNavigate } from 'react-router-dom';
 
 function Login(props) {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -27,7 +28,7 @@ function Login(props) {
         textAlign: 'right',
         fontSize: '0.9rem',
         color: '#666',
-        'text-decoration': 'underline',
+        textDecoration: 'underline',
         cursor: 'pointer',
     };
 
@@ -65,23 +66,20 @@ function Login(props) {
         cursor: 'pointer',
     };
 
-    const dispatch = useDispatch();
-    // toast.success("Logged in successfully");
-
     let toast_id;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const authenticate = () => {
         if (username && password) {
-            toast("Logged in successfully!!");
-            console.log("logged in successfully!!");
-            dispatch(login());
             sessionStorage.setItem("freshLogin", "true");
+            dispatch(login());
+            navigate('/');
         } else {
-            console.log("incorrect username or password");
             if (!toast.isActive(toast_id))
-                toast_id = toast.error("Incorrect username or password !!");
-
+                toast_id = toast.error("Incorrect credentials!");
         }
-
     }
     return (
         <div>

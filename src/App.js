@@ -24,7 +24,6 @@ import store from './Store';
 // )
 // const router = createBrowserRouter(routeDefinitions);
 
-// TODO: on first render / -> login, after login / -> home  ISSUE: cant user store isLoggedIn in App.js 
 function App() {
   const router = createBrowserRouter([
     {
