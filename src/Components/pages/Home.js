@@ -52,6 +52,7 @@ function Home() {
             sessionStorage.clear();
         }
     }, [sessionStorage.getItem("freshLogin")]);
+
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     if (!isLoggedIn) return <Login />;
 
@@ -76,3 +77,5 @@ function Home() {
 }
 
 export default Home;
+
+
