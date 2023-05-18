@@ -58,13 +58,19 @@ const Tracker = () => {
         </div>
         <LoginButton style={buttonAnimationProps}>Login</LoginButton>
       </NavbarContainer>
-      <hr />
+
       {/* <CircularProgress hours={2} totalHours={7} />
       <CircularProgress hours={2} totalHours={8} />
       <CircularProgress hours={hours} totalHours={totalHours} /> */}
       {/* <CircularProgress progress={angle} /> */}
-      <CircularProgress progressAngle={Math.PI * 0.3} />
 
+      <CircularProgress currentTime={"30:00:34"} totalTime={"120:00:00"} habitName={"GYM"} />
+      <CircularProgress currentTime={"10:00:34"} totalTime={"120:00:00"} habitName={"Coding"} />
+      <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:15"} habitName={"Tracker"} />
+      <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:05"} habitName={"Tracker"} />
+      {/* TODO Add a plus button to create habit with currentTime, totalTime, HabitName */}
+      {/* TODO: Enable Start, Stop */}
+      {/* TODO enable flex to put these in container in row first  */}
     </>
   );
 };
