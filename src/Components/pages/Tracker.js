@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import CircularProgress from './Circular_progress';
 import './ProgressRow.css';
+import { Typography, Card, CardContent } from "@mui/material";
 
 const NavbarContainer = styled(animated.nav)`
   display: flex;
@@ -45,10 +46,15 @@ const Tracker = () => {
   });
 
 
-  const hours = 120;
-  const totalHours = 360;
-  const angle = 20;// Math.PI * 2 * 0.1;
-  const color = 'green';
+  const INIT_DATA = [
+    { id: "1", currentTime: "03:00:34", totalTime: "120:00:00", habitName: "GYM" },
+    { id: "2", currentTime: "10:00:34", totalTime: "120:00:00", habitName: "Coding" },
+    { id: "3", currentTime: "00:00:03", totalTime: "00:00:07", habitName: "Tracker" },
+    { id: "4", currentTime: "00:01:00", totalTime: "02:00:00", habitName: "Power" }
+  ];
+
+  const [data, setData] = useState(INIT_DATA);
+  console.log("rerendring length : ", data, data.length);
 
   const ProgressRow = ({ progressData, componentsPerRow }) => {
     componentsPerRow = 3;
@@ -68,24 +74,101 @@ const Tracker = () => {
       ));
     };
 
+    const [showForm, setShowForm] = useState(true);
+    const [habitName, setHabitName] = useState("");
+    const [currentTime, setCurrentTime] = useState("");
+    const [totalTime, setTotalTime] = useState("");
+
+    const toggleForm = () => {
+      setShowForm((prevShowForm) => !prevShowForm);
+    };
+
+    const handleHabitNameChange = (e) => {
+      setHabitName(e.target.value);
+    };
+
+    const handleCurrentTimeChange = (e) => {
+      setCurrentTime(e.target.value);
+    };
+
+    const handleTotalTimeChange = (e) => {
+      setTotalTime(e.target.value);
+    };
+
+
+    const handleFormSubmit = (e) => {
+      e.preventDefault();
+
+      // Create a new progress item
+      const newItem = {
+        id: data.length + 1, // Generate a unique ID for the item
+        habitName,
+        currentTime,
+        totalTime,
+      };
+
+      // Add the new progress item to the data array
+      // const updatedProgressData = [...progressData, newItem];
+
+      // Update the progress data
+      // (you can replace this with your own logic to handle state updates)
+      // console.log(updatedProgressData);
+      setData([...data, newItem]);
+
+      // Reset the form inputs
+      setHabitName("");
+      setCurrentTime("");
+      setTotalTime("");
+
+      // Hide the form
+      setShowForm(false);
+    };
+
     return (
-      <div className="progress-container">
-        {[...Array(numRows)].map((_, index) => (
-          <div className="progress-row" key={index}>
-            {getComponentsForRow(index)}
-          </div>
-        ))}
-      </div>
+      <>
+        <div className="progress-container">
+          {[...Array(numRows)].map((_, rowIndex) => (
+            <div className="progress-row" key={rowIndex}>
+              {getComponentsForRow(rowIndex)}
+            </div>
+          ))}
+        </div>
+
+        {showForm ? (
+          <Card className="card" style={{ padding: "", margin: "", width: '22rem', boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)" }}>
+            <CardContent>
+              <form className="form-container" onSubmit={handleFormSubmit}>
+                <input
+                  type="text"
+                  placeholder="Habit Name"
+                  value={habitName}
+                  onChange={handleHabitNameChange}
+                />
+                <input
+                  type="text"
+                  placeholder="Current Time"
+                  value={currentTime}
+                  onChange={handleCurrentTimeChange}
+                />
+                <input
+                  type="text"
+                  placeholder="Total Time"
+                  value={totalTime}
+                  onChange={handleTotalTimeChange}
+                />
+                <button type="submit">Add</button>
+              </form>
+            </CardContent>
+          </Card>
+        ) : (
+          <button className="add-button" onClick={toggleForm}>
+            +
+          </button>
+        )}
+      </>
     );
   };
 
-  const data = [{ id: "1", currentTime: "03:00:34", totalTime: "120:00:00", habitName: "GYM" }, {
-    id: "2", currentTime: "10:00:34", totalTime: "120:00:00", habitName: "Coding"
-  }, {
-    id: "3", currentTime: "00:00:03", totalTime: "00:00:07", habitName: "Tracker"
-  }, {
-    id: "4", currentTime: "00:01:00", totalTime: "02:00:00", habitName: "Power"
-  }];
 
 
   return (
@@ -98,24 +181,9 @@ const Tracker = () => {
         <LoginButton style={buttonAnimationProps}>Login</LoginButton>
       </NavbarContainer>
 
-      {/* <CircularProgress hours={2} totalHours={7} />
-      <CircularProgress hours={2} totalHours={8} />
-      <CircularProgress hours={hours} totalHours={totalHours} /> */}
-      {/* <CircularProgress progress={angle} /> */}
       <ProgressRow progressData={data} componentsPerRow={3} />
-      {/* <CircularProgress currentTime={"30:00:34"} totalTime={"120:00:00"} habitName={"GYM"} />
-      <CircularProgress currentTime={"10:00:34"} totalTime={"120:00:00"} habitName={"Coding"} />
-      <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:15"} habitName={"Tracker"} />
-      <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:05"} habitName={"Tracker"} /> */} */}
-      {/* {data.map(ele => <CircularProgress currentTime={ele.currentTime} totalTime={ele.totalTime} habitName={ele.habitName} />)}
-      {/* TODO Add a plus button to create habit with currentTime, totalTime, HabitName */}
-      {/* TODO: Enable Start, Stop */}
-      {/* TODO enable flex to put these in container in row first  */}
     </>
   );
 };
 
 export default Tracker;
-
-
-
