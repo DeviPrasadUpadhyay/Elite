@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import CircularProgress from './Circular_progress';
+import './ProgressRow.css';
 
 const NavbarContainer = styled(animated.nav)`
   display: flex;
@@ -49,6 +50,44 @@ const Tracker = () => {
   const angle = 20;// Math.PI * 2 * 0.1;
   const color = 'green';
 
+  const ProgressRow = ({ progressData, componentsPerRow }) => {
+    componentsPerRow = 3;
+    const numRows = Math.ceil(progressData.length / componentsPerRow);
+
+    const getComponentsForRow = (rowIndex) => {
+      const startIndex = rowIndex * componentsPerRow;
+      const endIndex = Math.min(startIndex + componentsPerRow, progressData.length);
+
+      return progressData.slice(startIndex, endIndex).map((item) => (
+        <CircularProgress
+          key={item.id}
+          currentTime={item.currentTime}
+          totalTime={item.totalTime}
+          habitName={item.habitName}
+        />
+      ));
+    };
+
+    return (
+      <div className="progress-container">
+        {[...Array(numRows)].map((_, index) => (
+          <div className="progress-row" key={index}>
+            {getComponentsForRow(index)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const data = [{ id: "1", currentTime: "03:00:34", totalTime: "120:00:00", habitName: "GYM" }, {
+    id: "2", currentTime: "10:00:34", totalTime: "120:00:00", habitName: "Coding"
+  }, {
+    id: "3", currentTime: "00:00:03", totalTime: "00:00:07", habitName: "Tracker"
+  }, {
+    id: "4", currentTime: "00:01:00", totalTime: "02:00:00", habitName: "Power"
+  }];
+
+
   return (
     <>
       <NavbarContainer style={containerAnimationProps}>
@@ -63,11 +102,12 @@ const Tracker = () => {
       <CircularProgress hours={2} totalHours={8} />
       <CircularProgress hours={hours} totalHours={totalHours} /> */}
       {/* <CircularProgress progress={angle} /> */}
-
-      <CircularProgress currentTime={"30:00:34"} totalTime={"120:00:00"} habitName={"GYM"} />
+      <ProgressRow progressData={data} componentsPerRow={3} />
+      {/* <CircularProgress currentTime={"30:00:34"} totalTime={"120:00:00"} habitName={"GYM"} />
       <CircularProgress currentTime={"10:00:34"} totalTime={"120:00:00"} habitName={"Coding"} />
       <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:15"} habitName={"Tracker"} />
-      <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:05"} habitName={"Tracker"} />
+      <CircularProgress currentTime={"00:00:02"} totalTime={"00:00:05"} habitName={"Tracker"} /> */} */}
+      {/* {data.map(ele => <CircularProgress currentTime={ele.currentTime} totalTime={ele.totalTime} habitName={ele.habitName} />)}
       {/* TODO Add a plus button to create habit with currentTime, totalTime, HabitName */}
       {/* TODO: Enable Start, Stop */}
       {/* TODO enable flex to put these in container in row first  */}

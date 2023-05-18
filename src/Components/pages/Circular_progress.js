@@ -12,6 +12,10 @@ const getSeconds = (timeString) => {
   return totalSeconds;
 };
 
+
+
+
+
 const CircularProgress = ({ currentTime, totalTime, habitName }) => {
   currentTime = useSelector(state => state.auth.currentTime);
   console.log("upon rerendering, it should change currentTime so should update currentSeconds too ...", currentTime);
@@ -94,9 +98,9 @@ const CircularProgress = ({ currentTime, totalTime, habitName }) => {
   const showStartButton = c1 < c2;
 
   return (
-    <Card className="card" style={{ padding: "5rem 5rem", margin: "5rem 5rem", width: '30rem', boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)" }}>
+    <Card className="card" style={{ padding: "", margin: "", width: '22rem', boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)" }}>
       <CardContent>
-        <Typography variant="h5" className="habit-name" style={{ marginBottom: "5rem", fontWeight: "600", fontStyle: "Roboto", fontSize: "5rem" }}>
+        <Typography variant="h4" className="habit-name" style={{ marginBottom: "2rem", fontWeight: "600", fontStyle: "Roboto", fontSize: "3rem" }}>
           {habitName}
         </Typography>
         <div className="circle">
@@ -110,10 +114,10 @@ const CircularProgress = ({ currentTime, totalTime, habitName }) => {
 
           {showStartButton && <StartButton style={{ margin: "5rem 0rem" }} onClick={updateTimer}>{timerRunning ? "Stop" : "Start"}</StartButton>}
         </div>
-        <Typography variant="h5" style={{ fontWeight: 800, fontFamily: "Roboto", fontSize: "4rem", margin: "5rem 5rem 5rem 5rem" }} >
+        <Typography variant="h5" style={{ fontWeight: 800, fontFamily: "Roboto", fontSize: "4rem", margin: "2rem" }} >
           {totalTime}
         </Typography>
-        {c1 === c2 && <Typography variant="h2" style={{ fontFamily: "Roboto", fontWeight: 600, marginLeft: "5rem" }}> Done !! </Typography>}
+        {c1 === c2 && <Typography variant="h2" style={{ fontFamily: "Roboto", fontWeight: 600, marginLeft: "2rem" }}> Done !! </Typography>}
       </CardContent>
     </Card >
   );
