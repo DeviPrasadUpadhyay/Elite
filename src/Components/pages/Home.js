@@ -4,6 +4,7 @@ import Login from './Login';
 import { ToastContainer, toast } from 'react-toastify';
 import Signup from './Signup';
 import FileUpload from '../../Utility/FileUpload';
+import Tracker from './Tracker';
 
 let toast_id;
 function Home() {
@@ -54,7 +55,8 @@ function Home() {
     }, [sessionStorage.getItem("freshLogin")]);
 
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-    if (!isLoggedIn) return <Login />;
+    // if (!isLoggedIn) return <Login />;
+    if (!isLoggedIn) return <Tracker />;
 
     return (
         <div>

@@ -14,6 +14,7 @@ import Login from './Components/pages/Login';
 import { Provider, useSelector } from 'react-redux';
 import store from './Store';
 import Signup from './Components/pages/Signup';
+import Tracker from './Components/pages/Tracker';
 
 
 
@@ -32,6 +33,7 @@ function App() {
       element: <Root />,
       children: [
         { path: "/", element: <Home /> },
+        { path: "/Elite", element: <Tracker /> },
         { path: "/about", element: <About /> },
         { path: "/contact", element: <Contact /> },
         { path: "/resources", element: <Resources /> },

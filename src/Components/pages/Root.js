@@ -10,9 +10,9 @@ const Root = () => {
     return (
         <>
             {/* <div>Root</div> */}
-            <Header />
+            {/* <Header /> */}
             <Outlet />
-            {isLoggedIn && <Footer />}
+            {/* {isLoggedIn && <Footer />} */}
         </>
     )
 }
