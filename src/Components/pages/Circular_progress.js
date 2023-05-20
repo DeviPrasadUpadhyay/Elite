@@ -5,43 +5,71 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { timeset } from "../../Slice/AuthorizationSlice";
 
-
 const getSeconds = (timeString) => {
   const [hours, minutes, seconds] = timeString.split(":");
   const totalSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
   return totalSeconds;
 };
 
+const StartButton = styled.div`
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, blue, aqua);
+  color: white;
+  font-size: 2rem;
+  padding: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
+const CircularProgressContainer = styled(Card)`
+  padding: "";
+  margin: "";
+  width: 22rem;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+`;
 
+const HabitName = styled(Typography)`
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-style: Roboto;
+  font-size: 3rem;
+`;
 
+const TimerCircle = styled.div`
+  /* Add any additional styles for the Timer Circle */
+`;
+
+const Sector = styled.div`
+  /* Add any additional styles for the sector */
+`;
+
+const Label = styled.div`
+  /* Add any additional styles for the label */
+`;
+
+const TimeDisplay = styled(Typography)`
+  font-weight: 800;
+  font-family: Roboto;
+  font-size: 4rem;
+  margin: 2rem;
+`;
+
+const DoneText = styled(Typography)`
+  font-family: Roboto;
+  font-weight: 600;
+  margin-left: 2rem;
+`;
 
 const CircularProgress = ({ currentTime, totalTime, habitName }) => {
-  currentTime = useSelector(state => state.auth.currentTime);
+  currentTime = useSelector((state) => state.auth.currentTime);
   console.log("upon rerendering, it should change currentTime so should update currentSeconds too ...", currentTime);
   console.log("cur : ", currentTime);
-  const calculateGradient = (angle) => {
-    const sectorColor = "green"; // Color for the sector
-    const remainingColor = "white"; // Color for the remaining circle
-    const gradientAngle = angle + 90;
-    return `conic-gradient(from ${gradientAngle}deg, ${sectorColor} 0%, ${sectorColor} ${angle}deg, ${remainingColor} ${angle}deg, ${remainingColor} 100%)`;
-  };
-
-  const StartButton = styled.div`
-    padding: 10px 20px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, blue, aqua);
-    color: white;
-    font-size: 2rem;
-    padding: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  `;
 
   const dispatch = useDispatch();
   const [timerRunning, setTimerRunning] = useState(false);
@@ -65,11 +93,6 @@ const CircularProgress = ({ currentTime, totalTime, habitName }) => {
       clearInterval(interval);
     };
   }, [timerRunning, currentSeconds, totalTime]);
-
-  // useEffect(() => {
-  //   setCurrentSeconds(getSeconds(currentTime));
-
-  // }, [currentTime]);
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -98,28 +121,28 @@ const CircularProgress = ({ currentTime, totalTime, habitName }) => {
   const showStartButton = c1 < c2;
 
   return (
-    <Card className="card" style={{ padding: "", margin: "", width: '22rem', boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)" }}>
+    <CircularProgressContainer className="card">
       <CardContent>
-        <Typography variant="h4" className="habit-name" style={{ marginBottom: "2rem", fontWeight: "600", fontStyle: "Roboto", fontSize: "3rem" }}>
-          {habitName}
-        </Typography>
-        <div className="circle">
-          <div
+        <HabitName variant="h4">{habitName}</HabitName>
+        <TimerCircle className="circle">
+          <Sector
             className="sector"
             style={{
-              background: calculateGradient(progressAngle),
+              background: `conic-gradient(from ${progressAngle + 90}deg, green 0%, green ${progressAngle}deg, white ${progressAngle}deg, white 100%)`,
             }}
-          ></div>
-          <div className="label">{formatTime(currentSeconds)}</div>
+          ></Sector>
+          <Label className="label">{formatTime(currentSeconds)}</Label>
 
-          {showStartButton && <StartButton style={{ margin: "5rem 0rem" }} onClick={updateTimer}>{timerRunning ? "Stop" : "Start"}</StartButton>}
-        </div>
-        <Typography variant="h5" style={{ fontWeight: 800, fontFamily: "Roboto", fontSize: "4rem", margin: "2rem" }} >
-          {totalTime}
-        </Typography>
-        {c1 === c2 && <Typography variant="h2" style={{ fontFamily: "Roboto", fontWeight: 600, marginLeft: "2rem" }}> Done !! </Typography>}
+          {showStartButton && (
+            <StartButton style={{ margin: "5rem 0rem" }} onClick={updateTimer}>
+              {timerRunning ? "Stop" : "Start"}
+            </StartButton>
+          )}
+        </TimerCircle>
+        <TimeDisplay variant="h5">{totalTime}</TimeDisplay>
+        {c1 === c2 && <DoneText variant="h2">Done !!</DoneText>}
       </CardContent>
-    </Card >
+    </CircularProgressContainer>
   );
 };
 

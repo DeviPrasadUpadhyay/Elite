@@ -33,6 +33,46 @@ const LoginButton = styled(NavButton)`
   border-color: #ca3e47;
 `;
 
+const ProgressRowContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const AddButton = styled.button`
+  padding: 10px;
+  font-size: 24px;
+  background-color: #1f2937;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+`;
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+`;
+
+const CardContainer = styled(Card)`
+  padding: 0;
+  margin: 0;
+  width: 22rem;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+`;
+
+const TrackerContainer = styled.div`
+  /* Add any additional styles for the Tracker container */
+`;
+
 const Tracker = () => {
   const buttonAnimationProps = useSpring({
     from: { opacity: 0, transform: 'translateY(-10px)' },
@@ -45,7 +85,6 @@ const Tracker = () => {
     config: { duration: 500 },
   });
 
-
   const INIT_DATA = [
     { id: "1", currentTime: "03:00:34", totalTime: "120:00:00", habitName: "GYM" },
     { id: "2", currentTime: "10:00:34", totalTime: "120:00:00", habitName: "Coding" },
@@ -54,10 +93,8 @@ const Tracker = () => {
   ];
 
   const [data, setData] = useState(INIT_DATA);
-  console.log("rerendring length : ", data, data.length);
 
   const ProgressRow = ({ progressData, componentsPerRow }) => {
-    componentsPerRow = 3;
     const numRows = Math.ceil(progressData.length / componentsPerRow);
 
     const getComponentsForRow = (rowIndex) => {
@@ -74,105 +111,58 @@ const Tracker = () => {
       ));
     };
 
-    const [showForm, setShowForm] = useState(true);
-    const [habitName, setHabitName] = useState("");
-    const [currentTime, setCurrentTime] = useState("");
-    const [totalTime, setTotalTime] = useState("");
-
-    const toggleForm = () => {
-      setShowForm((prevShowForm) => !prevShowForm);
-    };
-
-    const handleHabitNameChange = (e) => {
-      setHabitName(e.target.value);
-    };
-
-    const handleCurrentTimeChange = (e) => {
-      setCurrentTime(e.target.value);
-    };
-
-    const handleTotalTimeChange = (e) => {
-      setTotalTime(e.target.value);
-    };
-
-
-    const handleFormSubmit = (e) => {
-      e.preventDefault();
-
-      // Create a new progress item
-      const newItem = {
-        id: data.length + 1, // Generate a unique ID for the item
-        habitName,
-        currentTime,
-        totalTime,
-      };
-
-      // Add the new progress item to the data array
-      // const updatedProgressData = [...progressData, newItem];
-
-      // Update the progress data
-      // (you can replace this with your own logic to handle state updates)
-      // console.log(updatedProgressData);
-      setData([...data, newItem]);
-
-      // Reset the form inputs
-      setHabitName("");
-      setCurrentTime("");
-      setTotalTime("");
-
-      // Hide the form
-      setShowForm(false);
-    };
-
     return (
-      <>
-        <div className="progress-container">
-          {[...Array(numRows)].map((_, rowIndex) => (
-            <div className="progress-row" key={rowIndex}>
-              {getComponentsForRow(rowIndex)}
-            </div>
-          ))}
-        </div>
-
-        {showForm ? (
-          <Card className="card" style={{ padding: "", margin: "", width: '22rem', boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)" }}>
-            <CardContent>
-              <form className="form-container" onSubmit={handleFormSubmit}>
-                <input
-                  type="text"
-                  placeholder="Habit Name"
-                  value={habitName}
-                  onChange={handleHabitNameChange}
-                />
-                <input
-                  type="text"
-                  placeholder="Current Time"
-                  value={currentTime}
-                  onChange={handleCurrentTimeChange}
-                />
-                <input
-                  type="text"
-                  placeholder="Total Time"
-                  value={totalTime}
-                  onChange={handleTotalTimeChange}
-                />
-                <button type="submit">Add</button>
-              </form>
-            </CardContent>
-          </Card>
-        ) : (
-          <button className="add-button" onClick={toggleForm}>
-            +
-          </button>
-        )}
-      </>
+      <ProgressRowContainer>
+        {[...Array(numRows)].map((_, rowIndex) => (
+          <div className="progress-row" key={rowIndex}>
+            {getComponentsForRow(rowIndex)}
+          </div>
+        ))}
+      </ProgressRowContainer>
     );
   };
 
+  const [showForm, setShowForm] = useState(false);
+  const [habitName, setHabitName] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+  const [totalTime, setTotalTime] = useState("");
 
+  const toggleForm = () => {
+    setShowForm((prevShowForm) => !prevShowForm);
+  };
+
+  const handleHabitNameChange = (e) => {
+    setHabitName(e.target.value);
+  };
+
+  const handleCurrentTimeChange = (e) => {
+    setCurrentTime(e.target.value);
+  };
+
+  const handleTotalTimeChange = (e) => {
+    setTotalTime(e.target.value);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const newItem = {
+      id: String(data.length + 1),
+      habitName,
+      currentTime,
+      totalTime,
+    };
+
+    setData((prevData) => [...prevData, newItem]);
+
+    setHabitName("");
+    setCurrentTime("");
+    setTotalTime("");
+    setShowForm(false);
+  };
 
   return (
-    <>
+    <TrackerContainer>
       <NavbarContainer style={containerAnimationProps}>
         <div>
           <TrackButton style={buttonAnimationProps}>Track</TrackButton>
@@ -182,7 +172,37 @@ const Tracker = () => {
       </NavbarContainer>
 
       <ProgressRow progressData={data} componentsPerRow={3} />
-    </>
+
+      {showForm ? (
+        <CardContainer>
+          <CardContent>
+            <FormContainer onSubmit={handleFormSubmit}>
+              <Input
+                type="text"
+                placeholder="Habit Name"
+                value={habitName}
+                onChange={handleHabitNameChange}
+              />
+              <Input
+                type="text"
+                placeholder="Current Time"
+                value={currentTime}
+                onChange={handleCurrentTimeChange}
+              />
+              <Input
+                type="text"
+                placeholder="Total Time"
+                value={totalTime}
+                onChange={handleTotalTimeChange}
+              />
+              <button type="submit">Add</button>
+            </FormContainer>
+          </CardContent>
+        </CardContainer>
+      ) : (
+        <AddButton onClick={toggleForm}>+</AddButton>
+      )}
+    </TrackerContainer>
   );
 };
 
