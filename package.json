@@ -1,5 +1,4 @@
 {
-  "homepage": "https://deviprasadupadhyay.github.io/Elite",
   "name": "elite",
   "version": "0.1.0",
   "private": true,
@@ -13,7 +12,6 @@
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.22.0",
     "react": "^18.2.0",
-    "react-circle-progress-bar": "^0.1.4",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
@@ -27,8 +25,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
